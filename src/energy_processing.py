@@ -66,7 +66,7 @@ class EnergyProcessing(House):
 
     def get_power_estimated(self): # Calculeaza puterea produsa estimata
         Pm = 575
-        n = 1
+        n = 10
         f = 0.8
         GTSTC = 1000
         

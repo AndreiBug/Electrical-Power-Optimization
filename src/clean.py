@@ -184,8 +184,6 @@ def clean_all_tables(): # Filtrare in toate csv-urile dupa casele care au ramas 
     df_record.to_csv(record_file, index=False)
     print(f"{initial_record_rows - len(df_record)} randuri eliminate din {record_file} (statii neasignate).")
 
-    print("Curatarea completa a fost realizata cu succes.")
-
 def clean_files(): # Apelez toate functiile de filtrare
     # Functii de stergere
     delete_houses_with_30_days_zero_consumption()
@@ -196,3 +194,10 @@ def clean_files(): # Apelez toate functiile de filtrare
     # Functii de corectare valori
     normalize_spikes()
     correct_negative_weather_values()
+
+def count_houses_in_consumption(file_path="Consumption.csv"):
+    df = pd.read_csv(file_path)
+
+    unique_houses = df['HouseIDREF'].nunique()
+    print(f"Numar de case distincte in {file_path}: {unique_houses}")
+    return unique_houses

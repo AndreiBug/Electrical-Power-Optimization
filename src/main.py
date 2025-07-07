@@ -5,11 +5,6 @@ import plot
 from energy_processing import EnergyProcessing
 from indicators import Indicators
 
-h = House(2000933)
-
-# Curatare date
-# clean.clean_files()
-
 # Case eliminate cu 30 zile consecutive cu 0 consum: {2000925}
 # Case eliminate cu mai putin de un an de date: [2000902, 2000981, 2000993]
 # 62 case eliminate care nu au valori pentru radiatie la statia meteo.
@@ -18,10 +13,15 @@ h = House(2000933)
 # 32 statii meteo eliminate din WeatherStation.csv (fara case asignate).
 # 3855724 randuri eliminate din WeatherData.csv (statii neasignate).
 # 160 randuri eliminate din Record.csv (statii neasignate).
-# Curatarea completa a fost realizata cu succes.
 # Spike-urile au fost normalizate.
 # Numar total de spike-uri normalizate: 375794
 # Au fost corectate 16308 valori negative din WeatherData.
+
+h = House(2000933)
+clean.count_houses_in_consumption()
+
+# Curatare date
+# clean.clean_files()
 
 # Plotari
 # plot.plot_daily_total_consumption(h)
@@ -31,7 +31,7 @@ h = House(2000933)
 
 indicator = Indicators(h.house_id)
 
-# Apelezi metodele necesare
+# Obtinerea inndicatorilor
 indicator.get_consumption()
 indicator.get_solar_radiation()
 indicator.get_power_estimated()
