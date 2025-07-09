@@ -21,64 +21,58 @@ class Indicators(EnergyProcessing):
             return False
         return True
 
-    def self_consumption(self): # Calculul SC
+    def calculate_indicator(self, indicator_type): # Calculeaza SS sau SC, se dau ca parametru in functie
         if not self.is_production_available() or not self.is_consumption_available():
             return
 
         numerator = 0
         denominator = 0
 
-        for t, prod in self.production.items():
-            cons = self.consumption.get(t, 0)  # Daca nu exista consum pt acel timp, consideram 0
+        common_times = set(self.production.keys()) & set(self.consumption.keys())
+
+        for t in common_times:
+            prod = self.production[t]
+            cons = self.consumption[t]
             numerator += min(prod, cons)
-            denominator += prod
+
+            if indicator_type == "SC":
+                denominator += prod
+            elif indicator_type == "SS":
+                denominator += cons
+            else:
+                print("Tip necunoscut de indicator. Foloseste 'SC' sau 'SS'.")
 
         if denominator == 0:
-            print("Productia totala este zero. SC nu poate fi calculat.")
-            self.SC = 0
+            print(f"{indicator_type}: Numitorul este 0. Nu poate fi calculat.")
+            setattr(self, indicator_type, 0)
             return 0
 
-        self.SC = numerator / denominator
-
-        print(f"Self-Consumption (SC): {self.SC:.3f}")
-        return self.SC
-
-    def self_sufficiency(self): # Calculul SS
-        if not self.is_production_available() or not self.is_consumption_available():
-            return
-
-        numerator = 0
-        denominator = 0
-
-        for t, prod in self.production.items():
-            load = self.consumption.get(t, 0)  # Daca nu exista consum pt acel timp, consideram 0
-            numerator += min(prod, load)
-            denominator += load
-
-        if denominator == 0:
-            print("Consumul total este zero. SS nu poate fi calculat.")
-            self.SS = 0
-            return 0
-
-        self.SS = numerator / denominator
-
-        print(f"Self-Sufficiency (SS): {self.SS:.3f}")
-        return self.SS
+        value = numerator / denominator
+        setattr(self, indicator_type, value)
+        print(f"{indicator_type}: {value:.3f}")
+        return value
 
     def calculate_NEEG(self): # Calculul NEEG
         if not self.is_production_available() or not self.is_consumption_available():
             return
+        
+        imported_energy = 0
+        exported_energy = 0
+        
+        common_times = set(self.production.keys()) & set(self.consumption.keys())
 
-        neeg = 0
+        for t in common_times:
+            prod = self.production[t]
+            cons = self.consumption[t]
+            
+            if cons > prod:
+                imported_energy += (cons - prod)
+            elif prod > cons:
+                exported_energy += (prod - cons)
 
-        for t, prod in self.production.items():
-            cons = self.consumption.get(t, 0)
-            diff = abs(prod - cons)
-            neeg += diff
+        self.NEEG = imported_energy + exported_energy
 
-        self.NEEG = neeg
-
-        print(f"Net Energy Exchanged with the Grid (NEEG): {self.NEEG:.3f} kWh")
+        print(f"NEEG: {self.NEEG:.3f} kWh")
         return self.NEEG
 
     def calculate_NPV(self):  # Calculul NPV
@@ -95,19 +89,29 @@ class Indicators(EnergyProcessing):
         CapEX = Cwp * Pm * n
         OpEX = 0.03 * CapEX
 
-        # Energie consumata medie pe ora (date reale), scalata la un an
-        E_cons_total = sum(self.consumption.values())  # kWh
-        E_cons_an = (E_cons_total / len(self.consumption)) * 8760
+        common_times = set(self.production.keys()) & set(self.consumption.keys())
+        
+        if not common_times:
+            print("Nu exista date comune pentru calculul NPV.")
+            return 0
+        
+        # Calculam energiile pentru perioada disponibila
+        total_consumption = sum(self.consumption[t] for t in common_times)
+        total_production = sum(self.production[t] for t in common_times)
+        total_self_consumption = sum(min(self.production[t], self.consumption[t]) for t in common_times)
+        
+        # Extindem pe un an întreg (8760 ore)
+        hours_available = len(common_times)
+        annual_consumption = (total_consumption / hours_available) * 8760
+        annual_production = (total_production / hours_available) * 8760
+        annual_self_consumption = (total_self_consumption / hours_available) * 8760
 
         # Factura fara PV
-        B_ref = E_cons_an * price_per_kWh
+        B_ref = annual_consumption * price_per_kWh
 
-        # Productia anuala
-        E_prod_total = sum(self.production.values())
-        E_prod_an = (E_prod_total / len(self.production)) * 8760
-
-        # Factura reala cu PV
-        B_real = max(0, B_ref - E_prod_an * price_per_kWh)
+        # Factura cu PV
+        energy_from_grid = max(0, annual_consumption - annual_self_consumption)
+        B_real = energy_from_grid * price_per_kWh
 
         # Castig anual
         G = B_ref - B_real
@@ -118,5 +122,5 @@ class Indicators(EnergyProcessing):
             npv += (G - OpEX) / ((1 + r) ** t)
 
         self.NPV = npv
-        print(f"NPV estimat: {self.NPV:.2f} EUR")
+        print(f"NPV: {self.NPV:.3f}")
         return self.NPV

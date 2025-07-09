@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 
 ########## Plotarea graficelor ##########
 
-def plot_10min_total_consumption_for_day(house, target_date):  # Plotare pe zi la interval de 10 minute pentru o casa    
+def plot_10min_consumption_for_day(house, target_date):  # Plotare pe zi la interval de 10 minute pentru o casa    
     
     input_csv = "Consumption.csv"
     df = pd.read_csv(input_csv)
@@ -46,7 +46,7 @@ def plot_10min_total_consumption_for_day(house, target_date):  # Plotare pe zi l
     fig.write_html(f"consum_10min_casa.html", auto_open=True)
     fig.show()
 
-def plot_hourly_total_consumption_for_day(house, target_date):  # Plotare pe zi la interval de o ora pentru o casa
+def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la interval de o ora pentru o casa
     input_csv = "Consumption.csv"  # Fisierul cu datele de consum
 
     df = pd.read_csv(input_csv)
@@ -89,7 +89,7 @@ def plot_hourly_total_consumption_for_day(house, target_date):  # Plotare pe zi 
     fig.write_html(f"consum_zi_casa.html", auto_open=True)
     fig.show()
 
-def plot_daily_total_consumption(house):  # Plotare pe an la interval de o zi pentru o casa
+def plot_daily_consumption_in_a_year(house):  # Plotare pe an la interval de o zi pentru o casa
     input_csv = "Consumption.csv"
 
     df = pd.read_csv(input_csv)
@@ -129,7 +129,7 @@ def plot_daily_total_consumption(house):  # Plotare pe an la interval de o zi pe
     fig.write_html(f"consum_total_pe_zi.html", auto_open=True)
     fig.show()
 
-def plot_appliance_hourly_consumption(house, appliance_name, date_str):  # Plotare pe ora pentru un aparat intr-o zi specifica
+def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str):  # Plotare pe ora pentru un aparat intr-o zi specifica
     consumption_csv = "Consumption.csv"
     appliance_csv = "Appliance.csv"
 

@@ -27,11 +27,6 @@ class EnergyProcessing(House):
 
         self.consumption = (df_hourly / 1000).to_dict()
 
-        for i, (key, value) in enumerate(self.consumption.items()):
-            if i >= 30:
-                break
-            print(f"Consum la ora {i+1}: Epoch {key} -> {value:.3f} kWh")
-
         return self.consumption
 
     def get_solar_radiation(self): # Ia radiatia solara din WeatherData
@@ -57,16 +52,11 @@ class EnergyProcessing(House):
         df_grouped = df_filtered.groupby('EpochTime')['Value'].sum()
         self.solar_radiation = df_grouped.to_dict()
 
-        for i, (key, value) in enumerate(self.solar_radiation.items()):
-            if i >= 30:
-                break
-            print(f"Radiatie la ora {i+1}: Epoch {key} -> G = {value}")
-
         return self.solar_radiation
 
     def get_power_estimated(self): # Calculeaza puterea produsa estimata
         Pm = 575
-        n = 10
+        n = 1
         f = 0.8
         GTSTC = 1000
         
@@ -77,13 +67,28 @@ class EnergyProcessing(House):
         production_data = {}
 
         for t, G in self.solar_radiation.items():
-            production_data[t] = Pm * n * f * G / GTSTC
+            power_W = Pm * n * f * G / GTSTC
+            energy_kWh = power_W / 1000  # Conversie W -> kWh pentru o ora
+            production_data[t] = energy_kWh
 
         self.production = production_data
 
+        return self.production
+    
+    def print_consumption(self): # Printeaza consumul
+        for i, (key, value) in enumerate(self.consumption.items()):
+            if i >= 30:
+                break
+            print(f"Consum la ora {i+1}: Epoch {key} -> {value:.3f} kWh")
+
+    def print_solar_radiation(self): # Printeaza radiatia solara
+        for i, (key, value) in enumerate(self.solar_radiation.items()):
+            if i >= 30:
+                break
+            print(f"Radiatie la ora {i+1}: Epoch {key} -> G = {value}")
+
+    def print_power_estimated(self): # Printeaza puterea produsa
         for i, (key, value) in enumerate(self.production.items()):
             if i >= 30:
                 break
             print(f"[Productie] Ora {i+1}: Epoch {key} -> E = {value:.3f} kWh")
-
-        return self.production
