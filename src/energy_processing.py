@@ -91,4 +91,4 @@ class EnergyProcessing(House):
         for i, (key, value) in enumerate(self.production.items()):
             if i >= 30:
                 break
-            print(f"[Productie] Ora {i+1}: Epoch {key} -> E = {value:.3f} kWh")
+            print(f"Productie la ora {i+1}: Epoch {key} -> E = {value:.3f} kWh")

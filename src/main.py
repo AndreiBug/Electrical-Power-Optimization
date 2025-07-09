@@ -17,16 +17,10 @@ from indicators import Indicators
 # Numar total de spike-uri normalizate: 375794
 # Au fost corectate 16308 valori negative din WeatherData.
 
-h = House(2000937)
+h = House(2000949)
 
 # Curatare date
 # clean.clean_files()
-
-# Plotari
-# plot.plot_10min_consumption_for_day(h, "1998-02-22")
-# plot.plot_hourly_consumption_for_day(h, "1998-02-06")
-# plot.plot_daily_consumption_in_a_year(h)
-# plot.plot_appliance_hourly_consumption_for_day(h, "Fridge (Kitchen, 180l)", "1998-02-22")
 
 indicator = Indicators(h.house_id)
 
@@ -43,3 +37,10 @@ indicator.calculate_indicator("SS")
 indicator.calculate_indicator("SC")
 indicator.calculate_NEEG()
 indicator.calculate_NPV()
+
+# Plotari
+plot.plot_10min_consumption_for_day(h, "1999-03-04")
+plot.plot_hourly_consumption_for_day(h, "1999-03-04")
+plot.plot_daily_consumption_in_a_year(h)
+plot.plot_appliance_hourly_consumption_for_day(h, "TV ()", "1999-03-04")
+plot.plot_hourly_production_for_day(indicator, "1999-03-04")
