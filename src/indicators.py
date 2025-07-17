@@ -39,8 +39,6 @@ class Indicators(EnergyProcessing):
                 denominator += prod
             elif indicator_type == "SS":
                 denominator += cons
-            else:
-                print("Tip necunoscut de indicator. Foloseste 'SC' sau 'SS'.")
 
         if denominator == 0:
             print(f"{indicator_type}: Numitorul este 0. Nu poate fi calculat.")
@@ -97,13 +95,11 @@ class Indicators(EnergyProcessing):
         
         # Calculam energiile pentru perioada disponibila
         total_consumption = sum(self.consumption[t] for t in common_times)
-        total_production = sum(self.production[t] for t in common_times)
         total_self_consumption = sum(min(self.production[t], self.consumption[t]) for t in common_times)
         
         # Extindem pe un an întreg (8760 ore)
         hours_available = len(common_times)
         annual_consumption = (total_consumption / hours_available) * 8760
-        annual_production = (total_production / hours_available) * 8760
         annual_self_consumption = (total_self_consumption / hours_available) * 8760
 
         # Factura fara PV
@@ -111,10 +107,10 @@ class Indicators(EnergyProcessing):
 
         # Factura cu PV
         energy_from_grid = max(0, annual_consumption - annual_self_consumption)
-        B_real = energy_from_grid * price_per_kWh
+        B_new = energy_from_grid * price_per_kWh
 
         # Castig anual
-        G = B_ref - B_real
+        G = B_ref - B_new
 
         # NPV
         npv = -CapEX

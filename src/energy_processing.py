@@ -68,8 +68,8 @@ class EnergyProcessing(House):
 
         for t, G in self.solar_radiation.items():
             power_W = Pm * n * f * G / GTSTC
-            energy_kWh = power_W / 1000  # Conversie W -> kWh pentru o ora
-            production_data[t] = energy_kWh
+            energy = power_W / 1000  # Conversie W -> kWh pentru o ora
+            production_data[t] = energy
 
         self.production = production_data
 
