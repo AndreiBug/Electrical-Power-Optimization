@@ -30,9 +30,9 @@ indicator.get_consumption()
 indicator.get_solar_radiation()
 indicator.get_power_estimated()
 
-indicator.print_consumption()
-indicator.print_solar_radiation()
-indicator.print_power_estimated()
+# indicator.print_consumption()
+# indicator.print_solar_radiation()
+# indicator.print_power_estimated()
 
 indicator.calculate_indicator("SS")
 indicator.calculate_indicator("SC")
