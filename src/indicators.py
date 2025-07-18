@@ -7,8 +7,8 @@ class Indicators(EnergyProcessing):
         self.SC = 0
         self.SS = 0
         self.NPV = 0
-        self.NEEG = 0
-        
+        self.NEEG = 0  
+
     def is_production_available(self):
         if not self.production:
             print("Productia nu este disponibila.")
@@ -23,7 +23,7 @@ class Indicators(EnergyProcessing):
 
     def calculate_indicator(self, indicator_type): # Calculeaza SS sau SC, se dau ca parametru in functie
         if not self.is_production_available() or not self.is_consumption_available():
-            return
+            return 0  # important: întoarcem 0, nu None
 
         numerator = 0
         denominator = 0

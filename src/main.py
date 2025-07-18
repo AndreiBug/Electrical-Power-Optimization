@@ -4,6 +4,7 @@ import clean
 import plot
 from energy_processing import EnergyProcessing
 from indicators import Indicators
+import optimize
 
 # Case eliminate cu 30 zile consecutive cu 0 consum: {2000925}
 # Case eliminate cu mai putin de un an de date: [2000902, 2000981, 2000993]
@@ -39,8 +40,26 @@ indicator.calculate_NEEG()
 indicator.calculate_NPV()
 
 # Plotari
-plot.plot_10min_consumption_for_day(h, "1999-03-04")
-plot.plot_hourly_consumption_for_day(h, "1999-03-04")
-plot.plot_daily_consumption_in_a_year(h)
-plot.plot_appliance_hourly_consumption_for_day(h, "TV ()", "1999-03-04")
-plot.plot_hourly_production_for_day(indicator, "1999-03-04")
+# plot.plot_10min_consumption_for_day(h, "1999-03-04")
+# plot.plot_hourly_consumption_for_day(h, "1999-03-04")
+# plot.plot_daily_consumption_in_a_year(h)
+# plot.plot_appliance_hourly_consumption_for_day(h, "TV ()", "1999-03-04")
+# plot.plot_hourly_production_for_day(indicator, "1999-03-04")
+
+# 5. optimizezi
+res = optimize.optimize_panels_de(
+    indicator_obj=indicator,
+    n_min=1,
+    n_max=40,
+    w_sc=0.5,
+    w_ss=0.5,
+    Pm=575,
+    f=0.8,
+    GTSTC=1000.0,
+    maxiter=40,
+    popsize=10,
+    seed=42,
+    disp=True
+)
+
+print("Rezultat final:", res)
