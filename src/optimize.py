@@ -1,45 +1,45 @@
 import numpy as np
 from scipy.optimize import differential_evolution
 
-def _pv_production_for_n(indicator_obj, n_panels, Pm=575, f=0.8, GTSTC=1000.0):
+def _pv_production_for_n(indicator_obj, n_panels, Pm=575, f=0.8, GTSTC=1000.0): # Calculare productie pentru n panouri
     if not indicator_obj.solar_radiation:
         raise ValueError("solar_radiation nu este incarcata; apeleaza get_solar_radiation() inainte de optimizare.")
     prod = {}
     for t, G in indicator_obj.solar_radiation.items():
         power_W = Pm * n_panels * f * (G / GTSTC)
-        prod[t] = power_W / 1000.0  # kWh intr-o ora
+        prod[t] = power_W / 1000.0  # kWh
     return prod
 
-def _objective_max_sc_ss(x, indicator_obj, w_sc=0.5, w_ss=0.5,
+def _objective_max_sc_ss(x, indicator_obj, w_sc=0.5, w_ss=0.5,  # Calculare functie obiectiv (scor maxim) pentru optimizarea ss si sc
                          Pm=575, f=0.8, GTSTC=1000.0, round_panels=True, quiet=True):
     n_panels = x[0]
     if round_panels:
         n_panels = max(1, int(round(n_panels)))
 
+    # Salveaza productia curenta
     prod_backup = indicator_obj.production
-    indicator_obj.production = _pv_production_for_n(indicator_obj, n_panels, Pm=Pm, f=f, GTSTC=GTSTC)
 
-    # calc indicatori (suprimă print)
-    if quiet:
-        old_print = indicator_obj.calculate_indicator
-        def silent_calc(kind):
-            # apelam originalul dar nu printam -> scrie rapid varianta ta silent
-            return old_print(kind)  # TODO: adaptează dacă vrei liniște completă
-        sc_val = indicator_obj.calculate_indicator("SC")
-        ss_val = indicator_obj.calculate_indicator("SS")
-    else:
-        sc_val = indicator_obj.calculate_indicator("SC")
-        ss_val = indicator_obj.calculate_indicator("SS")
+    # Productie temporara pentru n_panels
+    indicator_obj.production = _pv_production_for_n(
+        indicator_obj, n_panels, Pm=Pm, f=f, GTSTC=GTSTC
+    )
 
+    sc_val = indicator_obj.calculate_indicator("SC")
+    ss_val = indicator_obj.calculate_indicator("SS")
+
+    # Revenire la productia originala
     indicator_obj.production = prod_backup
 
+    # Penalizare daca nu s-au putut calcula indicatorii
     if sc_val is None or ss_val is None:
         return 1e9
 
     score = (w_sc * sc_val) + (w_ss * ss_val)
+
+    # DE minimizeaza => intoarcem negativul
     return -score
 
-def optimize_panels_de(indicator_obj,
+def optimize_panels_de(indicator_obj, # Differential evolution
                        n_min=1,
                        n_max=40,
                        w_sc=0.5,
