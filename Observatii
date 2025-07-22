@@ -1,0 +1,29 @@
+====================
+   Curatare date
+====================
+
+Case eliminate cu 30 zile consecutive cu 0 consum: {2000925}
+Case eliminate cu mai putin de un an de date: [2000902, 2000981, 2000993]
+62 case eliminate care nu au valori pentru radiatie la statia meteo.
+634 randuri eliminate din Appliance.csv (case invalide).
+33676139 randuri eliminate din Consumption.csv (case invalide).
+32 statii meteo eliminate din WeatherStation.csv (fara case asignate).
+3855724 randuri eliminate din WeatherData.csv (statii neasignate).
+160 randuri eliminate din Record.csv (statii neasignate).
+Spike-urile au fost normalizate.
+Numar total de spike-uri normalizate: 375794
+Au fost corectate 16308 valori negative din WeatherData.
+
+====================
+     Indicatori
+====================
+
+SS: Procentul din consum care este acoperit de productia proprie
+SC: Procentul din productia proprie care este consumata local (nu exportata in retea)
+NEEG: Energia neta schimbata cu reteaua: diferenta dintre energia exportata si cea importata
+NPV: Profitul pe un interval de timp mare
+
+Maximizam SS si SC in acelasi timp:
+- SS creste => SC scade
+- SC creste => SS scade
+- Cu cat avem mai multe panouri solare, cu atat creste SS si scade SC

@@ -6,22 +6,10 @@ from energy_processing import EnergyProcessing
 from indicators import Indicators
 import optimize
 
-# Case eliminate cu 30 zile consecutive cu 0 consum: {2000925}
-# Case eliminate cu mai putin de un an de date: [2000902, 2000981, 2000993]
-# 62 case eliminate care nu au valori pentru radiatie la statia meteo.
-# 634 randuri eliminate din Appliance.csv (case invalide).
-# 33676139 randuri eliminate din Consumption.csv (case invalide).
-# 32 statii meteo eliminate din WeatherStation.csv (fara case asignate).
-# 3855724 randuri eliminate din WeatherData.csv (statii neasignate).
-# 160 randuri eliminate din Record.csv (statii neasignate).
-# Spike-urile au fost normalizate.
-# Numar total de spike-uri normalizate: 375794
-# Au fost corectate 16308 valori negative din WeatherData.
-
-h = House(2000949)
+h = House(2000933)
 
 # Curatare date
-clean.clean_files()
+# clean.clean_files()
 
 indicator = Indicators(h.house_id)
 
@@ -39,26 +27,26 @@ indicator.calculate_NEEG()
 indicator.calculate_NPV()
 
 # Plotari
-plot.plot_10min_consumption_for_day(h, "1999-03-04")
-plot.plot_hourly_consumption_for_day(h, "1999-03-04")
-plot.plot_daily_consumption_in_a_year(h)
-plot.plot_appliance_hourly_consumption_for_day(h, "TV ()", "1999-03-04")
-plot.plot_hourly_production_for_day(indicator, "1999-03-04")
+# plot.plot_10min_consumption_for_day(h, "1999-03-04")
+# plot.plot_hourly_consumption_for_day(h, "1999-03-04")
+# plot.plot_daily_consumption_in_a_year(h)
+# plot.plot_appliance_hourly_consumption_for_day(h, "TV ()", "1999-03-04")
+# plot.plot_hourly_production_for_day(indicator, "1999-03-04")
 
 # Optimizare
-res = optimize.optimize_panels_de(
-    indicator_obj=indicator,
-    n_min=1,
-    n_max=40,
-    w_sc=0.5,
-    w_ss=0.5,
-    Pm=575,
-    f=0.8,
-    GTSTC=1000.0,
-    maxiter=40,
-    popsize=10,
-    seed=42,
-    disp=True
-)
+# res = optimize.optimize_panels_de(
+#     indicator_obj=indicator,
+#     n_min=1,
+#     n_max=40,
+#     w_sc=0.5,
+#     w_ss=0.5,
+#     Pm=575,
+#     f=0.8,
+#     GTSTC=1000.0,
+#     maxiter=40,
+#     popsize=10,
+#     seed=42,
+#     disp=True
+# )
 
-print("Rezultat final:", res)
+# print("Rezultat final:", res)

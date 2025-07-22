@@ -79,7 +79,7 @@ def optimize_panels_de(indicator_obj, # Differential evolution
 
     if disp:
         print("\n=== Rezultate Differential Evolution ===")
-        print(f"n_panels optim: {n_opt}")
+        print(f"Panouri optime: {n_opt}")
         print(f"SC: {sc_opt:.3f}")
         print(f"SS: {ss_opt:.3f}")
         print(f"Scor combinat: {best_score:.3f}")
