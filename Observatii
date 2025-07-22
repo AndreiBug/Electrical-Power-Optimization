@@ -27,3 +27,21 @@ Maximizam SS si SC in acelasi timp:
 - SS creste => SC scade
 - SC creste => SS scade
 - Cu cat avem mai multe panouri solare, cu atat creste SS si scade SC
+
+
+Bibliografie:
+DE: https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html
+Data smoothing (Moving average): https://www.sigmacomputing.com/blog/data-smoothing-cleaning
+Pandas: https://pandas.pydata.org/docs/
+Lucrarea cu time in python: https://pandas.pydata.org/docs/user_guide/timeseries.html
+Gruparea dataframe-urilor: https://realpython.com/pandas-groupby/
+Informatii despre preturi si electricitate Franta:
+https://en.selectra.info/energy-france/guides/electricity/tariffs
+https://kwhprice.eu/en/france/2025
+Plotly: https://plotly.com/python/
+Numpy: https://numpy.org/doc/2.3/
+
+"Python for Data Analysis", Wes McKinney
+https://www.researchgate.net/publication/378204172_Introduction_to_Pandas
+https://www.researchgate.net/publication/393636871_A_Standardized_Threshold_Approach_for_Outlier_Detection_Using_Python_Algorithms
+https://www.researchgate.net/publication/382865909_GroupBy_Tutorial
