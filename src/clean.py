@@ -3,7 +3,7 @@ import pandas as pd
 ########## Corectii ale anomaliilor ##########
 
 def delete_house_less_than_a_year():  # Stergerea caselor cu mai putin de un an de date
-    house_csv = "House.csv"
+    house_csv = "Database/House.csv"
 
     df_house = pd.read_csv(house_csv)
 
@@ -24,7 +24,7 @@ def delete_house_less_than_a_year():  # Stergerea caselor cu mai putin de un an 
     print(f"Case eliminate cu mai putin de un an de date: {houses_to_remove}")
 
 def normalize_spikes(): # Normalizarea spike-urilor din 10 in 10 minute
-    csv = "Consumption.csv"
+    csv = "Database/Consumption.csv"
     threshold = 3
 
     df = pd.read_csv(csv)
@@ -57,8 +57,8 @@ def normalize_spikes(): # Normalizarea spike-urilor din 10 in 10 minute
     print(f"Numar total de spike-uri normalizate: {spike_count}")
 
 def delete_houses_with_30_days_zero_consumption(): # Stergerea caselor cu 30 de zile consecutive cu 0 consum
-    consumption_file = "Consumption.csv"
-    house_file = "House.csv"
+    consumption_file = "Database/Consumption.csv"
+    house_file = "Database/House.csv"
     threshold = 30
 
     df_consumption = pd.read_csv(consumption_file)
@@ -104,7 +104,7 @@ def delete_houses_with_30_days_zero_consumption(): # Stergerea caselor cu 30 de 
     print(f"Case eliminate cu {threshold} zile consecutive cu 0 consum: {houses_to_remove}")
 
 def correct_negative_weather_values(): # Corectarea valorilor din statiile meteo cu valori sub 0
-    csv_file = "WeatherData.csv"
+    csv_file = "Database/WeatherData.csv"
     df = pd.read_csv(csv_file)
 
     negative_count = (df['Value'] < 0).sum()
@@ -119,8 +119,8 @@ def correct_negative_weather_values(): # Corectarea valorilor din statiile meteo
     print(f"Au fost corectate {negative_count} valori negative din WeatherData.")
 
 def remove_houses_with_no_radiation_data(): # Sterge casele care nu au asociata o statie meteo cu radiatia inregistrata
-    house_file = 'House.csv'
-    weather_file = 'WeatherData.csv'
+    house_file = 'Database/House.csv'
+    weather_file = 'Database/WeatherData.csv'
 
     df_house = pd.read_csv(house_file)
     df_weather = pd.read_csv(weather_file)
@@ -137,12 +137,12 @@ def remove_houses_with_no_radiation_data(): # Sterge casele care nu au asociata 
     return df_house_filtered   
 
 def clean_all_tables(): # Filtrare in toate csv-urile dupa casele care au ramas in House.csv
-    house_file = "House.csv"
-    appliance_file = "Appliance.csv"
-    consumption_file = "Consumption.csv"
-    weather_station_file = "WeatherStation.csv"
-    weather_data_file = "WeatherData.csv"
-    record_file = "Record.csv"
+    house_file = "Database/House.csv"
+    appliance_file = "Database/Appliance.csv"
+    consumption_file = "Database/Consumption.csv"
+    weather_station_file = "Database/WeatherStation.csv"
+    weather_data_file = "Database/WeatherData.csv"
+    record_file = "Database/Record.csv"
 
     # Citire House.csv si extragere ID-uri valide
     df_house = pd.read_csv(house_file)
@@ -196,7 +196,7 @@ def clean_files(): # Apelez toate functiile de filtrare
     correct_negative_weather_values()
 
 def count_houses_in_consumption(): # Numara casele din Consumption.csv
-    file_path = "Consumption.csv"
+    file_path = "Database/Consumption.csv"
     df = pd.read_csv(file_path)
 
     unique_houses = df['HouseIDREF'].nunique()

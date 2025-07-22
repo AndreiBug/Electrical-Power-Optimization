@@ -4,7 +4,7 @@ class WeatherStation:
     def __init__(self, station_id):
         self.station_id = station_id
 
-        df = pd.read_csv("WeatherStation.csv")
+        df = pd.read_csv("Database/WeatherStation.csv")
 
         station_data = df[df['ID'] == station_id]
 

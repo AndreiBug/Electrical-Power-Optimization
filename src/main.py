@@ -21,7 +21,7 @@ import optimize
 h = House(2000949)
 
 # Curatare date
-# clean.clean_files()
+clean.clean_files()
 
 indicator = Indicators(h.house_id)
 
@@ -29,7 +29,6 @@ indicator = Indicators(h.house_id)
 indicator.get_consumption()
 indicator.get_solar_radiation()
 indicator.get_power_estimated()
-
 # indicator.print_consumption()
 # indicator.print_solar_radiation()
 # indicator.print_power_estimated()
@@ -40,13 +39,13 @@ indicator.calculate_NEEG()
 indicator.calculate_NPV()
 
 # Plotari
-# plot.plot_10min_consumption_for_day(h, "1999-03-04")
-# plot.plot_hourly_consumption_for_day(h, "1999-03-04")
-# plot.plot_daily_consumption_in_a_year(h)
-# plot.plot_appliance_hourly_consumption_for_day(h, "TV ()", "1999-03-04")
-# plot.plot_hourly_production_for_day(indicator, "1999-03-04")
+plot.plot_10min_consumption_for_day(h, "1999-03-04")
+plot.plot_hourly_consumption_for_day(h, "1999-03-04")
+plot.plot_daily_consumption_in_a_year(h)
+plot.plot_appliance_hourly_consumption_for_day(h, "TV ()", "1999-03-04")
+plot.plot_hourly_production_for_day(indicator, "1999-03-04")
 
-# 5. optimizezi
+# Optimizare
 res = optimize.optimize_panels_de(
     indicator_obj=indicator,
     n_min=1,

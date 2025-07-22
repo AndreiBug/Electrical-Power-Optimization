@@ -13,7 +13,7 @@ class EnergyProcessing(House):
         self.solar_radiation = {} # Radiatia solara pe ora
     
     def get_consumption(self):  # Ia consumul total al casei per ora din csv
-        consumption_file = "Consumption.csv"
+        consumption_file = "Database/Consumption.csv"
         df = pd.read_csv(consumption_file)
 
         df = df[df['HouseIDREF'] == self.house_id]
@@ -30,8 +30,8 @@ class EnergyProcessing(House):
         return self.consumption
 
     def get_solar_radiation(self): # Ia radiatia solara din WeatherData
-        house_file = "House.csv"
-        weather_file = "WeatherData.csv"
+        house_file = "Database/House.csv"
+        weather_file = "Database/WeatherData.csv"
 
         df_house = pd.read_csv(house_file)
         df_weather = pd.read_csv(weather_file)

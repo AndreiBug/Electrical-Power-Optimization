@@ -7,7 +7,7 @@ from datetime import datetime
 
 def plot_10min_consumption_for_day(house, target_date):  # Plotare pe zi la interval de 10 minute pentru o casa
     
-    input_csv = "Consumption.csv"
+    input_csv = "Database/Consumption.csv"
     df = pd.read_csv(input_csv)
     df = df[df['HouseIDREF'] == house.house_id]  # Pastreaza doar randurile care apartin casei curente
 
@@ -44,11 +44,11 @@ def plot_10min_consumption_for_day(house, target_date):  # Plotare pe zi la inte
         markers=True
     )
     fig.update_layout(xaxis_tickformat='%H:%M')
-    fig.write_html(f"consum_pe_10min_in_zi.html", auto_open=True)
+    fig.write_html(f"Plots/consum_pe_10min_in_zi.html", auto_open=True)
     fig.show()
 
 def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la interval de o ora pentru o casa
-    input_csv = "Consumption.csv"  # Fisierul cu datele de consum
+    input_csv = "Database/Consumption.csv"  # Fisierul cu datele de consum
 
     df = pd.read_csv(input_csv)
     df = df[df['HouseIDREF'] == house.house_id]  # Filtrare dupa house_id
@@ -87,11 +87,11 @@ def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la int
         markers=True
     )
     fig.update_layout(xaxis_tickformat='%H:%M')
-    fig.write_html(f"consum_pe_ora_in_zi.html", auto_open=True)
+    fig.write_html(f"Plots/consum_pe_ora_in_zi.html", auto_open=True)
     fig.show()
 
 def plot_daily_consumption_in_a_year(house):  # Plotare pe an la interval de o zi pentru o casa
-    input_csv = "Consumption.csv"
+    input_csv = "Database/Consumption.csv"
 
     df = pd.read_csv(input_csv)
     df = df[df['HouseIDREF'] == house.house_id]  # Filtrare dupa ID-ul casei
@@ -127,12 +127,12 @@ def plot_daily_consumption_in_a_year(house):  # Plotare pe an la interval de o z
         hovermode='x unified'
     )
 
-    fig.write_html(f"consum_pe_zi_in_an.html", auto_open=True)
+    fig.write_html(f"Plots/consum_pe_zi_in_an.html", auto_open=True)
     fig.show()
 
 def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str):  # Plotare pe ora pentru un aparat intr-o zi specifica
-    consumption_csv = "Consumption.csv"
-    appliance_csv = "Appliance.csv"
+    consumption_csv = "Database/Consumption.csv"
+    appliance_csv = "Database/Appliance.csv"
 
     df_consumption = pd.read_csv(consumption_csv)
     df_appliance = pd.read_csv(appliance_csv)
@@ -193,7 +193,7 @@ def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str): 
         hovermode='x unified'
     )
 
-    fig.write_html(f"appliance.html", auto_open=True)
+    fig.write_html(f"Plots/appliance.html", auto_open=True)
     fig.show()
 
 def plot_hourly_production_for_day(house, day=None):  # Plotare energie produsa pe ora intr-o zi
@@ -244,5 +244,5 @@ def plot_hourly_production_for_day(house, day=None):  # Plotare energie produsa 
         template='plotly_white'
     )
 
-    fig.write_html("productie_zi.html", auto_open=True)
+    fig.write_html("Plots/productie_zi.html", auto_open=True)
     fig.show()
