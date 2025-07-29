@@ -1,4 +1,3 @@
-# Functii pentru calculul SS, SC, NPV, NEEG
 from energy_processing import EnergyProcessing
 
 class Indicators(EnergyProcessing):
@@ -23,7 +22,7 @@ class Indicators(EnergyProcessing):
 
     def calculate_indicator(self, indicator_type): # Calculeaza SS sau SC, se dau ca parametru in functie
         if not self.is_production_available() or not self.is_consumption_available():
-            return 0  # important: întoarcem 0, nu None
+            return 0
 
         numerator = 0
         denominator = 0

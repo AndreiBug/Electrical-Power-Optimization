@@ -5,11 +5,11 @@
 Case eliminate cu 30 zile consecutive cu 0 consum: {2000925}
 Case eliminate cu mai putin de un an de date: [2000902, 2000981, 2000993]
 62 case eliminate care nu au valori pentru radiatie la statia meteo.
-634 randuri eliminate din Appliance.csv (case invalide).
-33676139 randuri eliminate din Consumption.csv (case invalide).
-32 statii meteo eliminate din WeatherStation.csv (fara case asignate).
-3855724 randuri eliminate din WeatherData.csv (statii neasignate).
-160 randuri eliminate din Record.csv (statii neasignate).
+634 randuri eliminate din Appliance.csv.
+33676139 randuri eliminate din Consumption.csv.
+32 statii meteo eliminate din WeatherStation.csv.
+3855724 randuri eliminate din WeatherData.csv.
+160 randuri eliminate din Record.csv.
 Spike-urile au fost normalizate.
 Numar total de spike-uri normalizate: 375794
 Au fost corectate 16308 valori negative din WeatherData.
@@ -45,3 +45,10 @@ Numpy: https://numpy.org/doc/2.3/
 https://www.researchgate.net/publication/378204172_Introduction_to_Pandas
 https://www.researchgate.net/publication/393636871_A_Standardized_Threshold_Approach_for_Outlier_Detection_Using_Python_Algorithms
 https://www.researchgate.net/publication/382865909_GroupBy_Tutorial
+
+
+Next updates:
+- Plotare consum si productie pe acelasi grafic
+- Functie pentru minimizare NEEG
+- Functii separate pentru maximizare doar SS sau doar SC
+- Asigurare ca se calculeaza corect kWh

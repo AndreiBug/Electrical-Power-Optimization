@@ -97,7 +97,6 @@ def delete_houses_with_30_days_zero_consumption(): # Stergerea caselor cu 30 de 
 
             last_day = day
 
-    # Eliminam doar din House.csv
     df_house_cleaned = df_house[~df_house['ID'].isin(houses_to_remove)]
     df_house_cleaned.to_csv(house_file, index=False)
 
@@ -128,7 +127,6 @@ def remove_houses_with_no_radiation_data(): # Sterge casele care nu au asociata 
     radiation_data = df_weather[df_weather['WeatherVariableIDREF'] == 4]
     stations_with_radiation = set(radiation_data['WeatherStationIDREF'])
 
-    # Filtram casele care au o statie meteo cu radiatie inregistrata
     df_house_filtered = df_house[df_house['WeatherStationIDREF'].isin(stations_with_radiation)]
 
     df_house_filtered.to_csv(house_file, index=False)
@@ -154,35 +152,35 @@ def clean_all_tables(): # Filtrare in toate csv-urile dupa casele care au ramas 
     initial_appliance_rows = len(df_appliance)
     df_appliance = df_appliance[df_appliance['HouseIDREF'].isin(valid_house_ids)]
     df_appliance.to_csv(appliance_file, index=False)
-    print(f"{initial_appliance_rows - len(df_appliance)} randuri eliminate din {appliance_file} (case invalide).")
+    print(f"{initial_appliance_rows - len(df_appliance)} randuri eliminate din {appliance_file}.")
 
     # Consumption.csv
     df_consumption = pd.read_csv(consumption_file)
     initial_consumption_rows = len(df_consumption)
     df_consumption = df_consumption[df_consumption['HouseIDREF'].isin(valid_house_ids)]
     df_consumption.to_csv(consumption_file, index=False)
-    print(f"{initial_consumption_rows - len(df_consumption)} randuri eliminate din {consumption_file} (case invalide).")
+    print(f"{initial_consumption_rows - len(df_consumption)} randuri eliminate din {consumption_file}.")
 
     # WeatherStation.csv
     df_station = pd.read_csv(weather_station_file)
     initial_station_count = len(df_station)
     df_station = df_station[df_station['ID'].isin(valid_station_ids)]
     df_station.to_csv(weather_station_file, index=False)
-    print(f"{initial_station_count - len(df_station)} statii meteo eliminate din {weather_station_file} (fara case asignate).")
+    print(f"{initial_station_count - len(df_station)} statii meteo eliminate din {weather_station_file}.")
 
     # WeatherData.csv
     df_weather_data = pd.read_csv(weather_data_file)
     initial_weather_data_rows = len(df_weather_data)
     df_weather_data = df_weather_data[df_weather_data['WeatherStationIDREF'].isin(valid_station_ids)]
     df_weather_data.to_csv(weather_data_file, index=False)
-    print(f"{initial_weather_data_rows - len(df_weather_data)} randuri eliminate din {weather_data_file} (statii neasignate).")
+    print(f"{initial_weather_data_rows - len(df_weather_data)} randuri eliminate din {weather_data_file}.")
 
     # Record.csv
     df_record = pd.read_csv(record_file)
     initial_record_rows = len(df_record)
     df_record = df_record[df_record['WeatherStationIDREF'].isin(valid_station_ids)]
     df_record.to_csv(record_file, index=False)
-    print(f"{initial_record_rows - len(df_record)} randuri eliminate din {record_file} (statii neasignate).")
+    print(f"{initial_record_rows - len(df_record)} randuri eliminate din {record_file}.")
 
 def clean_files(): # Apelez toate functiile de filtrare
     # Functii de stergere

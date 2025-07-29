@@ -12,13 +12,13 @@ class EnergyProcessing(House):
         self.production = {} # Puterea produsa pe ora
         self.solar_radiation = {} # Radiatia solara pe ora
     
-    def get_consumption(self):  # Ia consumul total al casei per ora din csv
+    def get_consumption(self):  # Calculeaza consumul total al casei per ora din csv
         consumption_file = "Database/Consumption.csv"
         df = pd.read_csv(consumption_file)
 
         df = df[df['HouseIDREF'] == self.house_id]
 
-        # Convertim EpochTime in inceputul orei (rotunjire in jos la multiplu de 3600)
+        # Convertim EpochTime la inceputul orei (rotunjire in jos la multiplu de 3600)
         def fix_hour(x):
             return x - (x % 3600)
         df['HourEpoch'] = df['EpochTime'].apply(fix_hour)
