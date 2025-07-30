@@ -53,6 +53,7 @@ https://www.researchgate.net/publication/382865909_GroupBy_Tutorial
 
 Next updates:
 - Plotare consum si productie pe acelasi grafic
-- Functie pentru minimizare NEEG
-- Functii separate pentru maximizare doar SS sau doar SC
+- Formatare cod si organizare mai bine
+- Functie pentru minimizare NEEG - DONE
+- Functii separate pentru maximizare doar SS sau doar SC - DONE
 - Asigurare ca se calculeaza corect kWh - DONE

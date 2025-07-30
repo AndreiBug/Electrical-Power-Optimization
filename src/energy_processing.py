@@ -54,27 +54,19 @@ class EnergyProcessing(House):
 
         return self.solar_radiation
 
-    def get_power_estimated(self): # Calculeaza puterea produsa estimata
-        Pm = 575
-        n = 10
-        f = 0.8
-        GTSTC = 1000
-        
+    def get_power_estimated(self, n=10, Pm=575, f=0.8, GTSTC=1000):  # Calculeaza puterea produsa estimata pentru n panouri
         if not self.solar_radiation:
             print("Radiatia solara nu este incarcata.")
             return {}
 
-        production_data = {}
-
-        for t, G in self.solar_radiation.items():
-            power_W = Pm * n * f * G / GTSTC
-            energy = power_W / 6000  # Conversie W*10min -> kWh
-            production_data[t] = energy
+        production_data = {
+            t: (Pm * n * f * G / GTSTC) / 6000  # W*10min -> kWh
+            for t, G in self.solar_radiation.items()
+        }
 
         self.production = production_data
-
         return self.production
-    
+
     def print_consumption(self): # Printeaza consumul
         for i, (key, value) in enumerate(self.consumption.items()):
             if i >= 30:
