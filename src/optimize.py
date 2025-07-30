@@ -7,7 +7,7 @@ def _pv_production_for_n(indicator_obj, n_panels, Pm=575, f=0.8, GTSTC=1000.0): 
     prod = {}
     for t, G in indicator_obj.solar_radiation.items():
         power_W = Pm * n_panels * f * (G / GTSTC)
-        prod[t] = power_W / 1000.0  # kWh
+        prod[t] = power_W / 6000.0  # W*10min -> kWh
     return prod
 
 def _objective_max_sc_ss(x, indicator_obj, w_sc=0.5, w_ss=0.5,  # Calculare functie obiectiv (scor maxim) pentru optimizarea ss si sc

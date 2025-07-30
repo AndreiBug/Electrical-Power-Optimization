@@ -18,6 +18,10 @@ Au fost corectate 16308 valori negative din WeatherData.
      Indicatori
 ====================
 
+Pentru consum am luat unitatile de masura astfel:
+- In baza de date originala: W/10min
+- Am transformat in kWh impartind la 6 * 1000.
+
 SS: Procentul din consum care este acoperit de productia proprie
 SC: Procentul din productia proprie care este consumata local (nu exportata in retea)
 NEEG: Energia neta schimbata cu reteaua: diferenta dintre energia exportata si cea importata
@@ -51,4 +55,4 @@ Next updates:
 - Plotare consum si productie pe acelasi grafic
 - Functie pentru minimizare NEEG
 - Functii separate pentru maximizare doar SS sau doar SC
-- Asigurare ca se calculeaza corect kWh
+- Asigurare ca se calculeaza corect kWh - DONE

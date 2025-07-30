@@ -33,8 +33,6 @@ def plot_10min_consumption_for_day(house, target_date):  # Plotare pe zi la inte
     df['Interval'] = df['Datetime'].dt.floor('10min')
     interval_total = df.groupby('Interval')['Value'].sum().reset_index()
 
-    # interval_total['Value'] /= 1000  # Transformare în kWh
-
     fig = px.line(
         interval_total,
         x='Interval',
@@ -76,7 +74,7 @@ def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la int
     # Grupare pe ore
     df['Hour'] = df['Datetime'].dt.floor('h')
     hourly_total = df.groupby('Hour')['Value'].sum().reset_index()
-    hourly_total['Value'] /= 1000  # Transformare in kWh
+    hourly_total['Value'] /= 6000  # Transformare in kWh
 
     fig = px.line(
         hourly_total,
@@ -106,7 +104,7 @@ def plot_daily_consumption_in_a_year(house):  # Plotare pe an la interval de o z
 
     # Grupare pe zi si transformare in kWh
     daily_total = df.groupby('Date')['Value'].sum().reset_index()
-    daily_total['Value'] /= 1000
+    daily_total['Value'] /= 6000
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(

@@ -25,7 +25,7 @@ class EnergyProcessing(House):
     
         df_hourly = df.groupby('HourEpoch')['Value'].sum()
 
-        self.consumption = (df_hourly / 1000).to_dict()
+        self.consumption = (df_hourly / 6000).to_dict()
 
         return self.consumption
 
@@ -56,7 +56,7 @@ class EnergyProcessing(House):
 
     def get_power_estimated(self): # Calculeaza puterea produsa estimata
         Pm = 575
-        n = 1
+        n = 10
         f = 0.8
         GTSTC = 1000
         
@@ -68,7 +68,7 @@ class EnergyProcessing(House):
 
         for t, G in self.solar_radiation.items():
             power_W = Pm * n * f * G / GTSTC
-            energy = power_W / 1000  # Conversie W -> kWh pentru o ora
+            energy = power_W / 6000  # Conversie W*10min -> kWh
             production_data[t] = energy
 
         self.production = production_data
