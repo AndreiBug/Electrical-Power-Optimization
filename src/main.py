@@ -33,7 +33,7 @@ indicator.calculate_NPV()
 # plot.plot_hourly_production_for_day(indicator, "1998-03-20")
 
 # Optimizare
-res = optimize.optimize_panels_de(indicator_obj=indicator, seed=42)
+res = optimize.optimize_panels_max_ss_sc(indicator_obj=indicator, seed=42)
 result_ss = optimize.optimize_panels_max_ss(indicator)
 result_sc = optimize.optimize_panels_max_sc(indicator)
 result_min_neeg = optimize.optimize_panels_min_neeg(indicator)

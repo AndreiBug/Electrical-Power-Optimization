@@ -192,11 +192,3 @@ def clean_files(): # Apelez toate functiile de filtrare
     # Functii de corectare valori
     normalize_spikes()
     correct_negative_weather_values()
-
-def count_houses_in_consumption(): # Numara casele din Consumption.csv
-    file_path = "Database/Consumption.csv"
-    df = pd.read_csv(file_path)
-
-    unique_houses = df['HouseIDREF'].nunique()
-    print(f"Numar de case distincte in {file_path}: {unique_houses}")
-    return unique_houses

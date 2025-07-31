@@ -32,8 +32,9 @@ Maximizam SS si SC in acelasi timp:
 - SC creste => SS scade
 - Cu cat avem mai multe panouri solare, cu atat creste SS si scade SC
 
-
-Bibliografie:
+====================
+    Bibliografie
+====================
 DE: https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html
 Data smoothing (Moving average): https://www.sigmacomputing.com/blog/data-smoothing-cleaning
 Pandas: https://pandas.pydata.org/docs/
@@ -53,11 +54,10 @@ https://www.researchgate.net/publication/382865909_GroupBy_Tutorial
 Next updates:
 - Plotare consum si productie pe acelasi grafic
 - Formatare cod si organizare mai bine
-- Functie pentru minimizare NEEG - DONE
-- Functii separate pentru maximizare doar SS sau doar SC - DONE
-- Asigurare ca se calculeaza corect kWh - DONE
 
-Caiet de practica:
+=====================
+  Caiet de practica
+=====================
 1. Iunie 23 - Iunie 29
 Analiza datelor si identificarea erorilor din baza de date. Am creat structura proiectului si am proiectat functiile pentru preprocesarea datelor, incluzand eliminarea anomaliilor si corectarea valorilor incorecte.
 

@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.optimize import differential_evolution
 
-def _objective_max_sc_ss(x, indicator_obj, w_sc=0.5, w_ss=0.5,  # Calculare functie obiectiv (scor maxim) pentru optimizarea ss si sc
+def objective_max_sc_ss(x, indicator_obj, w_sc=0.5, w_ss=0.5,  # Calculare functie obiectiv (scor maxim) pentru optimizarea SS si SC
                          Pm=575, f=0.8, GTSTC=1000.0, round_panels=True, quiet=True):
     n_panels = x[0]
     if round_panels:
@@ -28,57 +28,7 @@ def _objective_max_sc_ss(x, indicator_obj, w_sc=0.5, w_ss=0.5,  # Calculare func
     # DE minimizeaza => intoarcem negativul
     return -score
 
-def optimize_panels_max_ss(indicator_obj,
-                           n_min=1,
-                           n_max=40,
-                           Pm=575,
-                           f=0.8,
-                           GTSTC=1000.0,
-                           maxiter=40,
-                           popsize=15,
-                           seed=None,
-                           disp=True):
-    return optimize_panels_de(
-        indicator_obj=indicator_obj,
-        n_min=n_min,
-        n_max=n_max,
-        w_sc=0.0,
-        w_ss=1.0,  # Maximizam doar SS
-        Pm=Pm,
-        f=f,
-        GTSTC=GTSTC,
-        maxiter=maxiter,
-        popsize=popsize,
-        seed=seed,
-        disp=disp
-    )
-
-def optimize_panels_max_sc(indicator_obj,
-                           n_min=1,
-                           n_max=40,
-                           Pm=575,
-                           f=0.8,
-                           GTSTC=1000.0,
-                           maxiter=40,
-                           popsize=15,
-                           seed=None,
-                           disp=True):
-    return optimize_panels_de(
-        indicator_obj=indicator_obj,
-        n_min=n_min,
-        n_max=n_max,
-        w_sc=1.0,  # Maximizam doar SC
-        w_ss=0.0,
-        Pm=Pm,
-        f=f,
-        GTSTC=GTSTC,
-        maxiter=maxiter,
-        popsize=popsize,
-        seed=seed,
-        disp=disp
-    )
-
-def _objective_min_neeg(x, indicator_obj, Pm=575, f=0.8, GTSTC=1000.0, round_panels=True):
+def objective_min_neeg(x, indicator_obj, Pm=575, f=0.8, GTSTC=1000.0, round_panels=True): # Calculare functie obiectiv pentru optimizarea NEEG
     n_panels = x[0]
     if round_panels:
         n_panels = max(1, int(round(n_panels)))
@@ -94,9 +44,59 @@ def _objective_min_neeg(x, indicator_obj, Pm=575, f=0.8, GTSTC=1000.0, round_pan
     if neeg_val is None:
         return 1e9  # Penalizare mare
 
-    return neeg_val  # DE minimizează, deci minimizăm NEEG direct
+    return neeg_val  # DE minimizeaza, deci minimizam NEEG direct
 
-def optimize_panels_de(indicator_obj, # Differential evolution
+def optimize_panels_max_ss(indicator_obj, # Differential evolution pentru maximizare SS
+                           n_min=1,
+                           n_max=40,
+                           Pm=575,
+                           f=0.8,
+                           GTSTC=1000.0,
+                           maxiter=40,
+                           popsize=15,
+                           seed=None,
+                           disp=True):
+    return optimize_panels_max_ss_sc(
+        indicator_obj=indicator_obj,
+        n_min=n_min,
+        n_max=n_max,
+        w_sc=0.0,
+        w_ss=1.0,  # Maximizam doar SS
+        Pm=Pm,
+        f=f,
+        GTSTC=GTSTC,
+        maxiter=maxiter,
+        popsize=popsize,
+        seed=seed,
+        disp=disp
+    )
+
+def optimize_panels_max_sc(indicator_obj, # Differential evolution pentru maximizare SC
+                           n_min=1,
+                           n_max=40,
+                           Pm=575,
+                           f=0.8,
+                           GTSTC=1000.0,
+                           maxiter=40,
+                           popsize=15,
+                           seed=None,
+                           disp=True):
+    return optimize_panels_max_ss_sc(
+        indicator_obj=indicator_obj,
+        n_min=n_min,
+        n_max=n_max,
+        w_sc=1.0,  # Maximizam doar SC
+        w_ss=0.0,
+        Pm=Pm,
+        f=f,
+        GTSTC=GTSTC,
+        maxiter=maxiter,
+        popsize=popsize,
+        seed=seed,
+        disp=disp
+    )
+
+def optimize_panels_max_ss_sc(indicator_obj, # Differential evolution pentru maximizare SS si SC
                        n_min=1,
                        n_max=40,
                        w_sc=0.5,
@@ -116,7 +116,7 @@ def optimize_panels_de(indicator_obj, # Differential evolution
     bounds = [(n_min, n_max)]
 
     result = differential_evolution(
-        _objective_max_sc_ss,
+        objective_max_sc_ss,
         bounds=bounds,
         args=(indicator_obj, w_sc, w_ss, Pm, f, GTSTC, True, True),
         maxiter=maxiter,
@@ -151,7 +151,7 @@ def optimize_panels_de(indicator_obj, # Differential evolution
         'scipy_result': result,
     }
 
-def optimize_panels_min_neeg(indicator_obj,
+def optimize_panels_min_neeg(indicator_obj, # Differential evolution pentru minimizare NEEG
                              n_min=1,
                              n_max=40,
                              Pm=575,
@@ -169,7 +169,7 @@ def optimize_panels_min_neeg(indicator_obj,
     bounds = [(n_min, n_max)]
 
     result = differential_evolution(
-        _objective_min_neeg,
+        objective_min_neeg,
         bounds=bounds,
         args=(indicator_obj, Pm, f, GTSTC, True),
         maxiter=maxiter,
