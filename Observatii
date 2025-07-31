@@ -50,10 +50,37 @@ https://www.researchgate.net/publication/378204172_Introduction_to_Pandas
 https://www.researchgate.net/publication/393636871_A_Standardized_Threshold_Approach_for_Outlier_Detection_Using_Python_Algorithms
 https://www.researchgate.net/publication/382865909_GroupBy_Tutorial
 
-
 Next updates:
 - Plotare consum si productie pe acelasi grafic
 - Formatare cod si organizare mai bine
 - Functie pentru minimizare NEEG - DONE
 - Functii separate pentru maximizare doar SS sau doar SC - DONE
 - Asigurare ca se calculeaza corect kWh - DONE
+
+Caiet de practica:
+1. Iunie 23 - Iunie 29
+Analiza datelor si identificarea erorilor din baza de date. Am creat structura proiectului si am proiectat functiile pentru preprocesarea datelor, incluzand eliminarea anomaliilor si corectarea valorilor incorecte.
+
+2. Iunie 30- Iulie 6
+Finalizarea functiilor de corectare a anomaliilor din datele de consum. Am implementat si functii de vizualizare a consumului pentru o casa, sub forma de grafice: pe ora intr-o zi, pe intervale de 10 minute intr-o zi, pe zile pe parcursul unui an si pe ora pentru un anumit aparat din casa intr-o zi.
+
+3. Iulie 7 - Iulie 13
+Restructurarea codului pentru a fi mai clar si mai usor de inteles. Am reorganizat proiectul pentru a folosi programarea orientata pe obiecte, grupand functionalitatile in clase si module specifice.
+
+4. Iulie 14 - Iulie 20
+Am procesat datele de consum si radiatia solara, organizandu-le in dictionare asociate clasei. Am implementat calculul estimativ al puterii produse pe baza radiatiei, astfel incat atat puterea consumata, radiatia solara, cat si puterea produsa sunt stocate ca dictionare in interiorul clasei.
+
+5. Iulie 21 - Iulie 27
+Analiza datelor energetice si implementarea functiilor pentru calculul indicatorilor: self-sufficiency (SS), self-consumption (SC), net exchanged energy with the grid (NEEG) si net present value (NPV).
+
+6. Iulie 28 - August 3
+Testarea si validarea functiilor pentru indicatorii energetici. Am verificat corectitudinea calculelor pentru SS, SC, NEEG si NPV pe mai multe seturi de date.
+
+7. August 4 - August 10
+Implementarea unei functii de optimizare a performantelor energetice ale unei case, avand ca obiectiv maximizarea indicatorilor SS, SC sau minimizarea NEEG. Am inceput testarea mai multor combinatii de parametri pentru a identifica configuratia optima.
+
+8. August 11 - August 17
+
+9. August 18 - August 24
+
+10. August 25 - August 31
