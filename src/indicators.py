@@ -1,5 +1,7 @@
 from energy_processing import EnergyProcessing
 
+########## Calculul indicatorilor SS, SC, NEEG, NPV ##########
+
 class Indicators(EnergyProcessing):
     def __init__(self, house_id):
         super().__init__(house_id)
@@ -40,13 +42,13 @@ class Indicators(EnergyProcessing):
                 denominator += cons
 
         if denominator == 0:
-            print(f"{indicator_type}: Numitorul este 0. Nu poate fi calculat.")
+            print(str(indicator_type) + ": Numitorul este 0. Nu poate fi calculat.")
             setattr(self, indicator_type, 0)
             return 0
 
         value = numerator / denominator
         setattr(self, indicator_type, value)
-        print(f"{indicator_type}: {value:.3f}")
+        print(str(indicator_type) + ": " + str(round(value, 3)))
         return value
 
     def calculate_NEEG(self): # Calculul NEEG
@@ -69,16 +71,10 @@ class Indicators(EnergyProcessing):
 
         self.NEEG = imported_energy + exported_energy
 
-        print(f"NEEG: {self.NEEG:.3f} kWh")
+        print("NEEG: " + str(round(self.NEEG, 3)) + " kWh")
         return self.NEEG
 
-    def calculate_NPV(self):  # Calculul NPV
-        Cwp = 0.11  # Pret/W
-        Pm = 575    # W
-        n = 1       # Nr panouri
-        Y = 20      # Ani
-        r = 0.05    # Rata actualizare
-        price_per_kWh = 0.2  # Valoarea pentru Franta
+    def calculate_NPV(self, Cwp = 0.11, Pm = 575, n = 1, Y = 20, r = 0.05, price_per_kWh = 0.2): # Calculul NPV
 
         if not self.is_production_available() or not self.is_consumption_available():
             return
@@ -96,7 +92,7 @@ class Indicators(EnergyProcessing):
         total_consumption = sum(self.consumption[t] for t in common_times)
         total_self_consumption = sum(min(self.production[t], self.consumption[t]) for t in common_times)
         
-        # Extindem pe un an întreg (8760 ore)
+        # Extindem pe un an intreg (8760 ore)
         hours_available = len(common_times)
         annual_consumption = (total_consumption / hours_available) * 8760
         annual_self_consumption = (total_self_consumption / hours_available) * 8760
@@ -117,5 +113,5 @@ class Indicators(EnergyProcessing):
             npv += (G - OpEX) / ((1 + r) ** t)
 
         self.NPV = npv
-        print(f"NPV: {self.NPV:.3f}")
+        print("NPV: " + str(round(self.NPV, 3)))
         return self.NPV

@@ -12,7 +12,7 @@ def plot_10min_consumption_for_day(house, target_date):  # Plotare pe zi la inte
     df = df[df['HouseIDREF'] == house.house_id]  # Pastreaza doar randurile care apartin casei curente
 
     if df.empty:
-        print(f"Nu exista date pentru casa {house.house_id}.")
+        print("Nu exista date pentru casa " + str(house.house_id))
         return
 
     # Converteste EpochTime in data-ora si extrage doar data
@@ -26,7 +26,7 @@ def plot_10min_consumption_for_day(house, target_date):  # Plotare pe zi la inte
     df = df[df['Date'] == target_day]
 
     if df.empty:
-        print(f"Nu exista consum în ziua {target_date} pentru casa {house.house_id}.")
+        print("Nu exista consum in ziua " + str(target_date) + " pentru casa " + str(house.house_id))
         return
 
     # Grupare pe intervale de 10 minute
@@ -35,14 +35,14 @@ def plot_10min_consumption_for_day(house, target_date):  # Plotare pe zi la inte
 
     fig = px.line(
         interval_total,
-        x='Interval',
-        y='Value',
-        title=f'Consum total la 10 minute în ziua {target_date} pentru casa {house.house_id}',
-        labels={'Interval': 'Ora (10 minute)', 'Value': 'Consum (W)'},
-        markers=True
+        x = 'Interval',
+        y = 'Value',
+        title = "Consum total la 10 minute in ziua " + str(target_date) + " pentru casa " + str(house.house_id),
+        labels = {'Interval': 'Ora (10 minute)', 'Value': 'Consum (W)'},
+        markers = True
     )
-    fig.update_layout(xaxis_tickformat='%H:%M')
-    fig.write_html(f"Plots/consum_pe_10min_in_zi.html", auto_open=True)
+    fig.update_layout(xaxis_tickformat = '%H:%M')
+    fig.write_html("Plots/consum_pe_10min_in_zi.html", auto_open=True)
     fig.show()
 
 def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la interval de o ora pentru o casa
@@ -52,7 +52,7 @@ def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la int
     df = df[df['HouseIDREF'] == house.house_id]  # Filtrare dupa house_id
 
     if df.empty:
-        print(f"Nu exista date pentru casa {house.house_id}.")
+        print("Nu exista date pentru casa " + str(house.house_id))
         return
 
     # Conversie EpochTime -> Datetime + extragere zi
@@ -62,13 +62,13 @@ def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la int
     try:
         target_day = pd.to_datetime(target_date).date()
     except Exception as e:
-        print(f"Data introdusa este invalida: {e}")
+        print("Data introdusa este invalida: " + str(e))
         return
 
     df = df[df['Date'] == target_day]
 
     if df.empty:
-        print(f"Nu exista consum in ziua {target_date} pentru casa {house.house_id}.")
+        print("Nu exista consum in ziua " + str(target_date) + " pentru casa " + str(house.house_id))
         return
 
     # Grupare pe ore
@@ -78,14 +78,14 @@ def plot_hourly_consumption_for_day(house, target_date):  # Plotare pe zi la int
 
     fig = px.line(
         hourly_total,
-        x='Hour',
-        y='Value',
-        title=f'Consum total orar in ziua {target_date} pentru casa {house.house_id}',
-        labels={'Hour': 'Ora', 'Value': 'Consum (kWh)'},
-        markers=True
+        x = 'Hour',
+        y = 'Value',
+        title = "Consum total orar in ziua " + str(target_date) + " pentru casa " + str(house.house_id),
+        labels = {'Hour': 'Ora', 'Value': 'Consum (kWh)'},
+        markers = True
     )
-    fig.update_layout(xaxis_tickformat='%H:%M')
-    fig.write_html(f"Plots/consum_pe_ora_in_zi.html", auto_open=True)
+    fig.update_layout(xaxis_tickformat = '%H:%M')
+    fig.write_html("Plots/consum_pe_ora_in_zi.html", auto_open=True)
     fig.show()
 
 def plot_daily_consumption_in_a_year(house):  # Plotare pe an la interval de o zi pentru o casa
@@ -95,7 +95,7 @@ def plot_daily_consumption_in_a_year(house):  # Plotare pe an la interval de o z
     df = df[df['HouseIDREF'] == house.house_id]  # Filtrare dupa ID-ul casei
 
     if df.empty:
-        print(f"Nu exista date pentru casa {house.house_id}.")
+        print("Nu exista date pentru casa " + str(house.house_id))
         return
 
     # Conversie EpochTime -> Datetime + extragere data
@@ -108,24 +108,24 @@ def plot_daily_consumption_in_a_year(house):  # Plotare pe an la interval de o z
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(
-        x=daily_total['Date'],
-        y=daily_total['Value'],
-        mode='lines+markers',
-        name='Consum zilnic',
-        marker=dict(size=6, color='royalblue'),
-        line=dict(color='royalblue'),
-        hovertemplate='Data: %{x}<br>Consum: %{y:.2f} kWh<extra></extra>'
+        x = daily_total['Date'],
+        y = daily_total['Value'],
+        mode = 'lines+markers',
+        name = 'Consum zilnic',
+        marker = dict(size = 6, color = 'royalblue'),
+        line = dict(color = 'royalblue'),
+        hovertemplate = 'Data: %{x}<br>Consum: %{y:.2f} kWh<extra></extra>'
     ))
 
     fig.update_layout(
-        title=f'Consum total pe zi pentru casa {house.house_id}',
-        xaxis_title='Data',
-        yaxis_title='Consum (kWh)',
-        xaxis_tickformat='%Y-%m-%d',
-        hovermode='x unified'
+        title = "Consum total pe zi pentru casa " + str(house.house_id),
+        xaxis_title = 'Data',
+        yaxis_title = 'Consum (kWh)',
+        xaxis_tickformat = '%Y-%m-%d',
+        hovermode = 'x unified'
     )
 
-    fig.write_html(f"Plots/consum_pe_zi_in_an.html", auto_open=True)
+    fig.write_html("Plots/consum_pe_zi_in_an.html", auto_open=True)
     fig.show()
 
 def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str):  # Plotare pe ora pentru un aparat intr-o zi specifica
@@ -142,7 +142,7 @@ def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str): 
     ]
 
     if filtered_appliances.empty:
-        print(f"Appliance-ul '{appliance_name}' nu a fost gasit pentru casa {house.house_id}.")
+        print("Appliance-ul " + appliance_name + " nu a fost gasit pentru casa " + str(house.house_id))
         return
 
     appliance_id = filtered_appliances.iloc[0]['ID']
@@ -154,7 +154,7 @@ def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str): 
     ].copy()
 
     if df.empty:
-        print(f"Nu exista date de consum pentru appliance-ul '{appliance_name}' in casa {house.house_id}.")
+        print("Nu exista date de consum pentru appliance-ul " + appliance_name + " in casa " + str(house.house_id))
         return
 
     # Conversie si filtrare dupa data
@@ -166,7 +166,7 @@ def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str): 
     df = df[df['Date'] == target_date]
 
     if df.empty:
-        print(f"Nu exista date pentru appliance-ul '{appliance_name}' in data {date_str}.")
+        print("Nu exista date pentru appliance-ul " + appliance_name + " in data " + date_str)
         return
 
     # Agregare pe ora
@@ -174,24 +174,24 @@ def plot_appliance_hourly_consumption_for_day(house, appliance_name, date_str): 
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(
-        x=hourly['Hour'],
-        y=hourly['Value'],
-        mode='lines+markers',
-        marker=dict(size=6, color='royalblue'),
-        line=dict(color='royalblue'),
-        name='Consum',
-        hovertemplate='Ora: %{x}<br>Consum: %{y:.2f} Wh<extra></extra>'
+        x = hourly['Hour'],
+        y = hourly['Value'],
+        mode = 'lines+markers',
+        marker = dict(size = 6, color = 'royalblue'),
+        line = dict(color = 'royalblue'),
+        name = 'Consum',
+        hovertemplate = 'Ora: %{x}<br>Consum: %{y:.2f} Wh<extra></extra>'
     ))
 
     fig.update_layout(
-        title=f'Consum orar pentru {appliance_name} in casa {house.house_id} ({date_str})',
-        xaxis_title='Ora',
-        yaxis_title='Consum (Wh)',
-        xaxis=dict(dtick=1),
-        hovermode='x unified'
+        title = "Consum orar pentru " + appliance_name + " in casa " + str(house.house_id) + " (" + date_str + ")",
+        xaxis_title = 'Ora',
+        yaxis_title = 'Consum (Wh)',
+        xaxis = dict(dtick = 1),
+        hovermode = 'x unified'
     )
 
-    fig.write_html(f"Plots/appliance.html", auto_open=True)
+    fig.write_html("Plots/appliance.html", auto_open=True)
     fig.show()
 
 def plot_hourly_production_for_day(house, day=None):  # Plotare energie produsa pe ora intr-o zi
@@ -212,7 +212,7 @@ def plot_hourly_production_for_day(house, day=None):  # Plotare energie produsa 
     daily_data = {t: v for t, v in data.items() if t.date() == day}
 
     if not daily_data:
-        print(f"Nu există date pentru ziua {day}.")
+        print("Nu exista date pentru ziua " + str(day))
         return
     
     times = sorted(daily_data)
@@ -220,26 +220,26 @@ def plot_hourly_production_for_day(house, day=None):  # Plotare energie produsa 
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(
-        x=times,
-        y=values,
-        mode='lines+markers',
-        name='Productie estimata',
-        line=dict(color='orange'),
-        marker=dict(size=6),
-        hovertemplate='Ora: %{x|%H:%M}<br>Productie: %{y:.2f} kWh<extra></extra>'
+        x = times,
+        y = values,
+        mode = 'lines+markers',
+        name = 'Productie estimata',
+        line = dict(color = 'orange'),
+        marker = dict(size = 6),
+        hovertemplate = 'Ora: %{x|%H:%M}<br>Productie: %{y:.2f} kWh<extra></extra>'
     ))
 
     fig.update_layout(
-        title=f'Productia estimata de energie pentru ziua {day}',
-        xaxis_title='Ora',
-        yaxis_title='Energie produsa (kWh)',
-        xaxis=dict(
-            tickformat='%H:%M',
-            tickangle=45,
-            title_standoff=10
+        title = "Productia estimata de energie pentru ziua " + str(day),
+        xaxis_title = 'Ora',
+        yaxis_title = 'Energie produsa (kWh)',
+        xaxis = dict(
+            tickformat = '%H:%M',
+            tickangle = 45,
+            title_standoff = 10
         ),
-        hovermode='x unified',
-        template='plotly_white'
+        hovermode = 'x unified',
+        template = 'plotly_white'
     )
 
     fig.write_html("Plots/productie_zi.html", auto_open=True)

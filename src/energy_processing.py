@@ -1,9 +1,7 @@
-# Functii pentru calculul energiei produse / consumate
 import pandas as pd
 from house import House
-import plotly.graph_objects as go
-from datetime import datetime, timezone
-import math
+
+########## Functii pentru calculul energiei produse / consumate ##########
 
 class EnergyProcessing(House):
     def __init__(self, house_id):
@@ -46,7 +44,7 @@ class EnergyProcessing(House):
         ]
 
         if df_filtered.empty:
-            print(f"Nu s-au gasit date meteo pentru statia {station_id}.")
+            print("Nu s-au gasit date meteo pentru statia " + str(station_id))
             return {}
 
         df_grouped = df_filtered.groupby('EpochTime')['Value'].sum()
@@ -54,7 +52,7 @@ class EnergyProcessing(House):
 
         return self.solar_radiation
 
-    def get_power_estimated(self, n=10, Pm=575, f=0.8, GTSTC=1000):  # Calculeaza puterea produsa estimata pentru n panouri
+    def get_power_estimated(self, n = 10, Pm = 575, f = 0.8, GTSTC = 1000):  # Calculeaza puterea produsa estimata pentru n panouri
         if not self.solar_radiation:
             print("Radiatia solara nu este incarcata.")
             return {}
@@ -67,20 +65,20 @@ class EnergyProcessing(House):
         self.production = production_data
         return self.production
 
-    def print_consumption(self): # Printeaza consumul
+    def print_consumption(self):  # Printeaza consumul
         for i, (key, value) in enumerate(self.consumption.items()):
             if i >= 30:
                 break
-            print(f"Consum la ora {i+1}: Epoch {key} -> {value:.3f} kWh")
+            print("Consum la ora " + str(i + 1) + ": Epoch " + str(key) + " -> " + str(round(value, 3)) + " kWh")
 
-    def print_solar_radiation(self): # Printeaza radiatia solara
+    def print_solar_radiation(self):  # Printeaza radiatia solara
         for i, (key, value) in enumerate(self.solar_radiation.items()):
             if i >= 30:
                 break
-            print(f"Radiatie la ora {i+1}: Epoch {key} -> G = {value}")
+            print("Radiatie la ora " + str(i + 1) + ": Epoch " + str(key) + " -> G = " + str(value))
 
-    def print_power_estimated(self): # Printeaza puterea produsa
-        for i, (key, value) in enumerate(self.production.items()):
+    def print_power_estimated(self):  # Printeaza puterea produsa
+        for i, (key, value) in enumerate(self.power_estimated.items()):
             if i >= 30:
                 break
-            print(f"Productie la ora {i+1}: Epoch {key} -> E = {value:.3f} kWh")
+            print("Putere estimata la ora " + str(i + 1) + ": Epoch " + str(key) + " -> " + str(round(value, 3)) + " kW")

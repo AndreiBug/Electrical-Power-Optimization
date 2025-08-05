@@ -10,7 +10,6 @@ Case eliminate cu mai putin de un an de date: [2000902, 2000981, 2000993]
 32 statii meteo eliminate din WeatherStation.csv.
 3855724 randuri eliminate din WeatherData.csv.
 160 randuri eliminate din Record.csv.
-Spike-urile au fost normalizate.
 Numar total de spike-uri normalizate: 375794
 Au fost corectate 16308 valori negative din WeatherData.
 
