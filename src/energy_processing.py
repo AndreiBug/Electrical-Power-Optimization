@@ -78,7 +78,7 @@ class EnergyProcessing(House):
             print("Radiatie la ora " + str(i + 1) + ": Epoch " + str(key) + " -> G = " + str(value))
 
     def print_power_estimated(self):  # Printeaza puterea produsa
-        for i, (key, value) in enumerate(self.power_estimated.items()):
+        for i, (key, value) in enumerate(self.production.items()):
             if i >= 30:
                 break
             print("Putere estimata la ora " + str(i + 1) + ": Epoch " + str(key) + " -> " + str(round(value, 3)) + " kW")

@@ -85,20 +85,17 @@ def optimize_panels_max_ss_sc(indicator_obj, n_min = 1, n_max = 40, w_sc = 0.5, 
     best_score = (w_sc * sc_opt) + (w_ss * ss_opt)
 
     if disp:
-        print("\n=== Rezultate Differential Evolution ===")
+        print("\n### Rezultate Differential Evolution ###")
         print("Panouri optime: " + str(n_opt))
         print("SC: " + str(round(sc_opt, 3)))
         print("SS: " + str(round(ss_opt, 3)))
-        print("Scor combinat: " + str(round(best_score, 3)))
-        print("SciPy fun raw: " + str(round(result.fun, 6)) + " (negativ scor).")
-        print("========================================\n")
+        print("Scor combinat: " + str(round(best_score, 3)) + "\n")
 
     return {
         'best_n': n_opt,
         'best_score': best_score,
         'best_SC': sc_opt,
-        'best_SS': ss_opt,
-        'scipy_result': result,
+        'best_SS': ss_opt
     }
 
 def optimize_panels_min_neeg(indicator_obj, n_min = 1, n_max = 40, Pm = 575, f = 0.8, # Differential evolution pentru minimizare NEEG
@@ -123,14 +120,11 @@ def optimize_panels_min_neeg(indicator_obj, n_min = 1, n_max = 40, Pm = 575, f =
     neeg_opt = indicator_obj.calculate_NEEG()
 
     if disp:
-        print("\n=== Rezultate Minim NEEG ===")
+        print("\n### Rezultate Minim NEEG ###")
         print("Panouri optime: " + str(n_opt))
-        print("NEEG minim: " + str(round(neeg_opt, 3)) + " kWh")
-        print("SciPy fun raw: " + str(round(result.fun, 6)) + " (valoare functie obiectiv).")
-        print("========================================\n")
+        print("NEEG minim: " + str(round(neeg_opt, 3)) + " kWh\n")
 
     return {
         'best_n': n_opt,
         'best_NEEG': neeg_opt,
-        'scipy_result': result,
     }
